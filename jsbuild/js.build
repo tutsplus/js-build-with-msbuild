@@ -1,0 +1,75 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ConcatDir>debug-js\concat</ConcatDir>
+    <MinDir>debug-js\min</MinDir>
+  </PropertyGroup>
+  <Target Name="CleanJs">
+    <Message Text="Running CleanJs" Importance="high"></Message>
+    <RemoveDir Directories="$(ConcatDir);$(MinDir)">
+      <Output PropertyName="DirsRemoved" TaskParameter="RemovedDirectories"/>
+    </RemoveDir>
+    <Message Text="Directories Removed: $(DirsRemoved)" Importance="high"></Message>
+  </Target>
+  <Target Name="InitJs">
+    <Message Text="Running InitJs" Importance="high"></Message>
+    <MakeDir Directories="$(ConcatDir);$(MinDir)">
+      <Output PropertyName="DirectoriesCreated" TaskParameter="DirectoriesCreated"/>
+    </MakeDir>
+    <Message Text="Directories Created: $(DirectoriesCreated)" Importance="high"></Message>
+  </Target>
+  <Target Name="ConcatenateJsFiles">
+    <ItemGroup>
+    <ConcatFiles Include="
+                 js\jquery-1.8.2.min.js;
+                 js\jquery-ui-1.9.2.custom.min.js;
+                 debug-js\src\jquery.ui.menubar.js;
+                 js\knockout-2.1.0.js;
+                 debug-js\src\default-src.js
+                 "/>
+    </ItemGroup>
+    <ReadLinesFromFile File="%(ConcatFiles.Identity)">
+      <Output TaskParameter="Lines" ItemName="ConcatLines"/>
+    </ReadLinesFromFile>
+
+    <WriteLinesToFile File="debug-js\concat\default-concat.js" Lines="@(ConcatLines)" Overwrite="true" />
+  </Target>
+  <Target Name="ConcatenateMinFiles">
+    <ItemGroup>
+    <ConcatMinFiles Include="
+                      js\jquery-1.8.2.min.js;
+                      js\jquery-ui-1.9.2.custom.min.js;
+                      debug-js\min\jquery.ui.menubar-min.js;
+                      js\knockout-2.1.0.js;  
+                      debug-js\min\default-min.js
+                      "/>              
+    </ItemGroup>
+    <ReadLinesFromFile File="%(ConcatMinFiles.Identity)" >
+      <Output TaskParameter="Lines" ItemName="ConcatMinFilesLines"/>
+    </ReadLinesFromFile>
+    <Message Text="We are concatenating these minified files %(ConcatMinFiles.Identity)" Importance="high"></Message>
+    <WriteLinesToFile File="debug-js\min\default.js" Lines="@(ConcatMinFilesLines)" Overwrite="true" />
+  </Target>
+  <Target Name="MinifyJsFiles">
+    <ItemGroup>
+      <MinFiles Include="
+                 debug-js\src\jquery.ui.menubar.js;
+                 debug-js\src\default-src.js
+           "/>
+      <Compressor Include="jsbuild\yuicompressor-2.4.7.jar"></Compressor>
+    </ItemGroup>
+    <Message Text="Hello %(Compressor.Fullpath)" Importance="high"></Message>
+    <Exec Command="java -jar %(Compressor.Fullpath) debug-js\src\default-src.js --type js -o debug-js\min\default-min.js"/>
+    <Exec Command="java -jar %(Compressor.Fullpath) debug-js\src\jquery.ui.menubar.js --type js -o debug-js\min\jquery.ui.menubar-min.js"/>
+  </Target>
+  <Target Name="HelloDiscworld">
+    <Message Text="Hello Discworld!!!!!" Importance="high"></Message>
+  </Target>
+  <Target Name="AfterBuild" DependsOnTargets="">
+    <CallTarget Targets="HelloDiscworld"></CallTarget>
+    <CallTarget Targets="CleanJs"></CallTarget>
+    <CallTarget Targets="InitJs"></CallTarget>
+    <CallTarget Targets="ConcatenateJsFiles"></CallTarget>
+    <CallTarget Targets="MinifyJsFiles"></CallTarget>
+    <CallTarget Targets="ConcatenateMinFiles"></CallTarget>
+  </Target>
+</Project>

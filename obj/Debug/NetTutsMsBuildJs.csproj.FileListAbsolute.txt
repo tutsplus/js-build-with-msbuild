@@ -1,0 +1,5 @@
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\bin\NetTutsMsBuildJs.dll
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\bin\NetTutsMsBuildJs.pdb
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\obj\Debug\NetTutsMsBuildJs.csprojResolveAssemblyReference.cache
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\obj\Debug\NetTutsMsBuildJs.dll
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\obj\Debug\NetTutsMsBuildJs.pdb

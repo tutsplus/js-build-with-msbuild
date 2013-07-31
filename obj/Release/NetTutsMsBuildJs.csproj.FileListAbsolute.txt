@@ -1,0 +1,4 @@
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\bin\NetTutsMsBuildJs.dll
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\bin\NetTutsMsBuildJs.pdb
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\obj\Release\NetTutsMsBuildJs.dll
+C:\NetTuts\MSBuildJs\NetTutsMSBuildJs\obj\Release\NetTutsMsBuildJs.pdb

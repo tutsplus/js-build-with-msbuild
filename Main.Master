@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="NetTutsMsBuildJs.Main" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="/css/smoothness/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
+    <link href="/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />    
+    <link href="css/jquery.ui.menubar.css" rel="stylesheet" />    
+    <style type="text/css">
+        body {
+            margin: 0;
+            font-size: 80%;
+        }
+        #show-result, #menu {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        #show-result {
+            padding: 10px;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="MainForm" runat="server">
+        <div data-bind="template: {name: 'MenubarTemplate' , foreach: masters, afterRender: renderMenu}"></div>
+        <script type="text/html" id="MenubarTemplate">
+            <ul class="ui-widget-header" id="menu" data-bind="template: { name: 'MenuNodeTemplate', foreach: $data.root.nodes}"></ul>
+        </script>
+        <script id="MenuNodeTemplate" type="text/html">
+            <li data-bind="addData: $data.url">
+                <a data-bind="attr: {href: ('#' + $data.url)}"><span data-bind="text: $data.text"></span></a>
+                <!-- ko if: $data.nodes -->
+                <ul data-bind="template: { name: 'MenuNodeTemplate', foreach: $data.nodes}"></ul>
+                <!-- /ko -->
+            </li>
+        </script>
+        <div id="show-result" class="ui-widget">
+            <h1 data-bind="text: header" class="ui-widget-header ui-corner-all"></h1>
+            <div data-bind="html: text" class="ui-widget-content ui-corner-all"></div>
+        </div>
+    </form>
+    <asp:ContentPlaceHolder ID="JsScripts" runat="server"/>
+</body>
+</html>
